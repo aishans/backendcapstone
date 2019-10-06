@@ -20,32 +20,46 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user.save()
         return validated_data
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
+
     class Meta:
-        model= Profile
-        fields= "__all__"
+        model = Profile
+        fields = "__all__"
+
+
+class SubjectListSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = "__all__"
+
+
+class CategoryListSerialzer(serializers.ModelSerializer):
+    subjects = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ["category", "subjects"]
+
+    def get_subjects(self, obj):
+        subject = Subject.objects.filter(category_subject=obj)
+        return SubjectListSerialzer(subject, many=True).data
+
 
 class SchoolListSerialzer(serializers.ModelSerializer):
+    categories = serializers.SerializerMethodField()
+
     class Meta:
-        model= School
-        fields= "__all__"
+        model = School
+        fields = ["school_name", "categories"]
 
-class CategoryElementaryListSerialzer(serializers.ModelSerializer):
+    def get_categories(self, obj):
+        category = Category.objects.filter(classification=obj)
+        return CategoryistSerialzer(category, many=True).data
+
+
+class QuestionListSerialzer(serializers.ModelSerializer):
     class Meta:
-        model= Category
-        fields= "__all__"
-
-class CategoryMiddleSchoolListSerialzer(serializers.ModelSerializer):
-    class Meta:
-        model= Category
-        fields= "__all__"
-
-class CategoryHighSchoolListSerialzer(serializers.ModelSerializer):
-    class Meta:
-        model= Category
-        fields= "__all__"
-
-
-
-
+        model = Question
+        fields = "__all__"
