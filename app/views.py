@@ -19,8 +19,7 @@ class UserCreateAPIView(CreateAPIView):
 class SchoolListView(ListAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolListSerialzer
-    filter_backends = [OrderingFilter, ]
-    permission_classes = [IsAuthenticated]
+    # filter_backends = [OrderingFilter, ]
 
 
 class CategoryListView(RetrieveAPIView):
@@ -28,16 +27,24 @@ class CategoryListView(RetrieveAPIView):
     serializer_class = CategoryListSerialzer
     lookup_field = 'id'
     lookup_url_kwarg = 'category_id'
-    permission_classes = [IsAuthenticated]
 
 
-# class SubjectListView(CreateAPIView):
-#     queryset = Subject.objects.all()
-#     serializer_class = SubjectListSerialzer
-#     permission_classes = [IsAuthenticated]
+class SubjectDetailListView(RetrieveAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectDetailListSerialzer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'subject_id'
 
 
-class QuestionListView(CreateAPIView):
+class SubjectQuestionListView(RetrieveAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectQuestionListSerialzer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'questions_id'
+
+
+class QuestionAnswerListView(ListAPIView):
     queryset = Question.objects.all()
-    serializer_class = QuestionListSerialzer
-    permission_classes = [IsAuthenticated]
+    serializer_class = QuestionAnswerListSerialzer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'question_id'
