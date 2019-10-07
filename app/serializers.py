@@ -32,7 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class SubjectListSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = "__all__"
+        fields = ['subject_name']
 
 
 class CategoryListSerialzer(serializers.ModelSerializer):
@@ -56,10 +56,46 @@ class SchoolListSerialzer(serializers.ModelSerializer):
 
     def get_categories(self, obj):
         category = Category.objects.filter(classification=obj)
-        return CategoryistSerialzer(category, many=True).data
+        return CategoryListSerialzer(category, many=True).data
+
+
+class SubjectDetailListSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = "__all__"
+
+
+class AnswerListSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ["is_correct", "answer"]
+
+
+class QuestionAnswerListSerialzer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = ["questions", "answers"]
+
+    def get_answers(self, obj):
+        rightanswer = Answer.objects.filter(question=obj)
+        return AnswerListSerialzer(rightanswer, many=True).data
 
 
 class QuestionListSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = "__all__"
+
+
+class SubjectQuestionListSerialzer(serializers.ModelSerializer):
+    questions = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Subject
+        fields = ["subject_name", "questions"]
+
+    def get_questions(self, obj):
+        subquestions = Question.objects.filter(subject=obj)
+        return QuestionListSerialzer(subquestions, many=True).data
