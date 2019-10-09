@@ -39,12 +39,4 @@ class SubjectDetailListView(RetrieveAPIView):
 class SubjectQuestionListView(RetrieveAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectQuestionListSerialzer
-    lookup_field = 'id'
     lookup_url_kwarg = 'questions_id'
-
-
-class QuestionAnswerListView(ListAPIView):
-    queryset = Question.objects.all()
-    serializer_class = QuestionAnswerListSerialzer
-    lookup_field = 'id'
-    lookup_url_kwarg = 'question_id'

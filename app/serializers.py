@@ -83,12 +83,6 @@ class QuestionAnswerListSerialzer(serializers.ModelSerializer):
         return AnswerListSerialzer(rightanswer, many=True).data
 
 
-class QuestionListSerialzer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = "__all__"
-
-
 class SubjectQuestionListSerialzer(serializers.ModelSerializer):
     questions = serializers.SerializerMethodField()
 
@@ -98,4 +92,4 @@ class SubjectQuestionListSerialzer(serializers.ModelSerializer):
 
     def get_questions(self, obj):
         subquestions = Question.objects.filter(subject=obj)
-        return QuestionListSerialzer(subquestions, many=True).data
+        return QuestionAnswerListSerialzer(subquestions, many=True).data
