@@ -68,7 +68,7 @@ class SubjectDetailListSerialzer(serializers.ModelSerializer):
 class AnswerListSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ["is_correct", "answer"]
+        fields = ["is_correct", "option"]
 
 
 class QuestionAnswerListSerialzer(serializers.ModelSerializer):
@@ -76,7 +76,7 @@ class QuestionAnswerListSerialzer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ["questions", "answers"]
+        fields = ["question", "answers"]
 
     def get_answers(self, obj):
         rightanswer = Answer.objects.filter(question=obj)
