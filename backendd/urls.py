@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app.views import (UserCreateAPIView, SchoolListView,
-                       CategoryListView, SubjectDetailListView, SubjectQuestionListView, )
+                       CategoryDetailView, SubjectDetailListView, SubjectQuestionListView, )
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.conf.urls.static import static
 from django.conf import settings
@@ -26,8 +26,8 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('register/', UserCreateAPIView.as_view(), name='register'),
     path('schools/', SchoolListView.as_view(), name='api-schools'),
-    path('schools/<int:category_id>/',
-         CategoryListView.as_view(), name='api-category'),
+    path('category/<int:category_id>/',
+         CategoryDetailView.as_view(), name='api-category'),
     path('subject/<int:subject_id>/',
          SubjectDetailListView.as_view(), name='api-subjectDetail'),
     path('questions/<int:questions_id>/',

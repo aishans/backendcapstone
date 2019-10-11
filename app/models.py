@@ -47,10 +47,10 @@ class Subject(models.Model):
 
 class Question(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    questions = models.TextField()
+    question = models.TextField()
 
 
 class Answer(models.Model):
     is_correct = models.BooleanField(default=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=120)
+    option = models.CharField(max_length=120)

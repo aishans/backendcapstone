@@ -22,7 +22,7 @@ class SchoolListView(ListAPIView):
     # filter_backends = [OrderingFilter, ]
 
 
-class CategoryListView(RetrieveAPIView):
+class CategoryDetailView(RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerialzer
     lookup_field = 'id'
