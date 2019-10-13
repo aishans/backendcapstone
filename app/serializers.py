@@ -21,7 +21,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return validated_data
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileDetailSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
 
     class Meta:
@@ -29,10 +29,16 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["points"]
+
+
 class SubjectListSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['subject_name']
+        fields = ['id', 'subject_name']
 
 
 class CategoryListSerialzer(serializers.ModelSerializer):
@@ -76,7 +82,7 @@ class QuestionAnswerListSerialzer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ["question", "answers"]
+        fields = ["id", "question", "answers"]
 
     def get_answers(self, obj):
         rightanswer = Answer.objects.filter(question=obj)
