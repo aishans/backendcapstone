@@ -20,32 +20,82 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user.save()
         return validated_data
 
-class ProfileSerializer(serializers.ModelSerializer):
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
+
     class Meta:
-        model= Profile
-        fields= "__all__"
+        model = Profile
+        fields = "__all__"
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["points"]
+
+
+class SubjectListSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = ['id', 'subject_name']
+
+
+class CategoryListSerialzer(serializers.ModelSerializer):
+    subjects = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ["category", "subjects"]
+
+    def get_subjects(self, obj):
+        subject = Subject.objects.filter(category_subject=obj)
+        return SubjectListSerialzer(subject, many=True).data
+
 
 class SchoolListSerialzer(serializers.ModelSerializer):
+    categories = serializers.SerializerMethodField()
+
     class Meta:
-        model= School
-        fields= "__all__"
+        model = School
+        fields = ["school_name", "categories"]
 
-class CategoryElementaryListSerialzer(serializers.ModelSerializer):
+    def get_categories(self, obj):
+        category = Category.objects.filter(classification=obj)
+        return CategoryListSerialzer(category, many=True).data
+
+
+class SubjectDetailListSerialzer(serializers.ModelSerializer):
     class Meta:
-        model= Category
-        fields= "__all__"
+        model = Subject
+        fields = "__all__"
 
-class CategoryMiddleSchoolListSerialzer(serializers.ModelSerializer):
+
+class AnswerListSerialzer(serializers.ModelSerializer):
     class Meta:
-        model= Category
-        fields= "__all__"
+        model = Answer
+        fields = ["is_correct", "option"]
 
-class CategoryHighSchoolListSerialzer(serializers.ModelSerializer):
+
+class QuestionAnswerListSerialzer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
     class Meta:
-        model= Category
-        fields= "__all__"
+        model = Question
+        fields = ["id", "question", "answers"]
+
+    def get_answers(self, obj):
+        rightanswer = Answer.objects.filter(question=obj)
+        return AnswerListSerialzer(rightanswer, many=True).data
 
 
+class SubjectQuestionListSerialzer(serializers.ModelSerializer):
+    questions = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Subject
+        fields = ["subject_name", "questions"]
 
+    def get_questions(self, obj):
+        subquestions = Question.objects.filter(subject=obj)
+        return QuestionAnswerListSerialzer(subquestions, many=True).data
