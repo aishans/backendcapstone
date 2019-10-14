@@ -36,6 +36,8 @@ class ProfileUpdateAPIView(UpdateAPIView):
         user = self.request.user
         queryset = self.queryset.get(user=user)
         return queryset
+#    def perform_update(self, serializer):
+#         serializer.save(point=self.request.user)
 
 
 class SchoolListView(ListAPIView):
@@ -44,11 +46,18 @@ class SchoolListView(ListAPIView):
     # filter_backends = [OrderingFilter, ]
 
 
-class CategoryDetailView(RetrieveAPIView):
+class SubjectListView(ListAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectListSerialzer
+    lookup_field = 'id'
+    lookup_url_kwarg = "category_id"
+
+
+class CategoryListView(RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerialzer
     lookup_field = 'id'
-    lookup_url_kwarg = 'category_id'
+    lookup_url_kwarg = 'school_id'
 
 
 class SubjectDetailListView(RetrieveAPIView):
@@ -61,4 +70,5 @@ class SubjectDetailListView(RetrieveAPIView):
 class SubjectQuestionListView(RetrieveAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectQuestionListSerialzer
-    lookup_url_kwarg = 'questions_id'
+    lookup_url_kwarg = 'subject_id'
+    permission_classes = [IsAuthenticated]

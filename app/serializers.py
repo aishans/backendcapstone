@@ -38,7 +38,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 class SubjectListSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['id', 'subject_name']
+        fields = ['id', 'subject_name', "image"]
 
 
 class CategoryListSerialzer(serializers.ModelSerializer):
@@ -58,7 +58,7 @@ class SchoolListSerialzer(serializers.ModelSerializer):
 
     class Meta:
         model = School
-        fields = ["school_name", "categories"]
+        fields = ["id", "image", "school_name", "categories"]
 
     def get_categories(self, obj):
         category = Category.objects.filter(classification=obj)
@@ -87,6 +87,14 @@ class QuestionAnswerListSerialzer(serializers.ModelSerializer):
     def get_answers(self, obj):
         rightanswer = Answer.objects.filter(question=obj)
         return AnswerListSerialzer(rightanswer, many=True).data
+
+    # def get_points(self, obj):
+    #     rightanswer = Answer.objects.filter(question=obj)
+    #     total = AnswerListSerialzer(rightanswer, many=True).data
+    #     print("total_points")
+    #     total_points = total.count(total)
+    #     print(total_points)
+    #     return total_points
 
 
 class SubjectQuestionListSerialzer(serializers.ModelSerializer):
