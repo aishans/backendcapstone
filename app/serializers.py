@@ -46,7 +46,7 @@ class CategoryListSerialzer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ["category", "subjects"]
+        fields = ["category", "subjects", "id"]
 
     def get_subjects(self, obj):
         subject = Subject.objects.filter(category_subject=obj)
