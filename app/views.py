@@ -8,8 +8,6 @@ from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-# Create your views here.
-
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
@@ -36,8 +34,9 @@ class ProfileUpdateAPIView(UpdateAPIView):
         user = self.request.user
         queryset = self.queryset.get(user=user)
         return queryset
-#    def perform_update(self, serializer):
-#         serializer.save(point=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class SchoolListView(ListAPIView):
@@ -71,4 +70,18 @@ class SubjectQuestionListView(RetrieveAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectQuestionListSerialzer
     lookup_url_kwarg = 'subject_id'
-    permission_classes = [IsAuthenticated]
+
+
+class SubjectCreateAPIView(CreateAPIView):
+    serializer_class = SubjectCreateSerializer
+    # permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+class QuestionCreateAPIView(CreateAPIView):
+    serializer_class = QuestionCreateSerializer
+    # permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+class AnswerCreateAPIView(CreateAPIView):
+    serializer_class = AnswerCreateSerializer
+    # permission_classes = [IsAuthenticated, IsAdminUser]

@@ -107,3 +107,25 @@ class SubjectQuestionListSerialzer(serializers.ModelSerializer):
     def get_questions(self, obj):
         subquestions = Question.objects.filter(subject=obj)
         return QuestionAnswerListSerialzer(subquestions, many=True).data
+
+
+class SubjectCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subject
+        fields = ["subject_name", "image",  'teacher_name',
+                  "description", 'category_subject']
+
+
+class QuestionCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        fields = ["id", "question", "subject"]
+
+
+class AnswerCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Answer
+        fields = ["question", "option", "is_correct"]

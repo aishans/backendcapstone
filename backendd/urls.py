@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app.views import (UserCreateAPIView, SchoolListView,
-                       CategoryListView, SubjectDetailListView, SubjectQuestionListView, SubjectListView, ProfileAPIView, ProfileUpdateAPIView,)
+                       CategoryListView, SubjectDetailListView, SubjectQuestionListView, SubjectListView, ProfileAPIView, ProfileUpdateAPIView, SubjectCreateAPIView, AnswerCreateAPIView, QuestionCreateAPIView)
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.conf.urls.static import static
 from django.conf import settings
@@ -36,8 +36,12 @@ urlpatterns = [
          SubjectDetailListView.as_view(), name='api-subjectDetail'),
     path('questionlist/<int:subject_id>/',
          SubjectQuestionListView.as_view(), name='api-subject-questions'),
-
-
+    path('subject/create/',
+         SubjectCreateAPIView.as_view(), name='api-subject-create'),
+    path('question/create/',
+         QuestionCreateAPIView.as_view(), name='api-question-create'),
+    path('answer/create/',
+         AnswerCreateAPIView.as_view(), name='api-answer-create'),
 
 
 ]
