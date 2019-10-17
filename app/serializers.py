@@ -46,7 +46,7 @@ class CategoryListSerialzer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ["category", "subjects", "id"]
+        fields = ["category", "subjects", "id", "image"]
 
     def get_subjects(self, obj):
         subject = Subject.objects.filter(category_subject=obj)
@@ -62,7 +62,7 @@ class SchoolListSerialzer(serializers.ModelSerializer):
 
     def get_categories(self, obj):
         category = Category.objects.filter(classification=obj)
-        return CategoryListSerialzer(category, many=True).data
+        return CategoryListSerialzer(category, many=True, context={"request": self.context["request"]}).data
 
 
 class SubjectDetailListSerialzer(serializers.ModelSerializer):

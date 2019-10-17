@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 
 SCHOOL_CHOICES = (
     ('---', '__'),
-    ('Elementary', 'ELEMENTARY'),
-    ('MiddleSchool', 'MIDDLESCHOOL'),
-    ('HighSchool', 'HIGHSCHOOL'),
+    ('المرحله الأبتدائيه', 'المرحله الأبتدائيه'),
+    ('المرحله المتوسطه', 'المرحله المتوسطه'),
+    ('المرحله الثانويه', 'المرحله الثانويه'),
 )
 CATEGORY_CHOICES = (
     ('---', '__'),
-    ('English', 'ENGLISH'),
-    ('Math', 'MATH'),
-    ('Arabic', 'ARABIC'),)
+    ('انجليزي', 'انجليزي'),
+    ('الرياضيات', 'الرياضيات'),
+    ('العربيه', 'اللغه العربيه'),)
 
 
 class Profile(models.Model):
