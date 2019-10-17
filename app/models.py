@@ -17,8 +17,9 @@ CATEGORY_CHOICES = (
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True)
-    courses_taken = models.CharField(max_length=120)
-    points = models.IntegerField()
+    courses_taken = models.CharField(max_length=120, default="")
+    points = models.IntegerField(default=0)
+    is_teacher= models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.user)

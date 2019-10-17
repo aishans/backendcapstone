@@ -18,6 +18,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user = User(username=username)
         new_user.set_password(password)
         new_user.save()
+        Profile.objects.create(user=new_user, is_teacher=self.context['request'].data['is_teacher'])
         return validated_data
 
 
